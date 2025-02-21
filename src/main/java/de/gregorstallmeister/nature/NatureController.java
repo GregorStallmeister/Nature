@@ -3,6 +3,7 @@ package de.gregorstallmeister.nature;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/nature")
@@ -44,5 +45,14 @@ public class NatureController {
             return animalRepository.findAll();
         else
             return animalRepository.findAllByEatable(eatable);
+    }
+
+    @GetMapping("/animals/{id}")
+    public Animal getAnimal(@PathVariable String id) {
+//        return animalRepository.findById((id)).orElseThrow();
+
+        Optional<Animal> animal = animalRepository.findById(id);
+
+        return animal.isPresent() ? animal.get() : null;
     }
 }
